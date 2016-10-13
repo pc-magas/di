@@ -33,7 +33,7 @@ class DIResolver
 
 		$this->diClasses=json_decode(file_get_contents($configfile),true);
 
-		$this->rootDir=$rootDir
+		$this->rootDir=$rootDir;
 	}
 
 	/**
