@@ -18,6 +18,6 @@
         "psr-0": {
             "DI": "src/"
         },
-        "files": ["vendor/wordnik/pcmagas/di/autoload.php"]
+        "files": ["autoload.php"]
     }
 }
