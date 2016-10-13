@@ -16,8 +16,7 @@
     },
     "autoload": {
         "psr-0": {
-            "DI\\Container": "src/",
-            "DI\\Exceptions":"src/Exceptions"
+            "DI": "src/"
         }
     }
 }
