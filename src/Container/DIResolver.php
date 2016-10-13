@@ -16,9 +16,15 @@ class DIResolver
 	private $diClasses=array();
 
 	/**
+	* Path to load the resourses
+	*/
+	private $rootDir="";
+
+	/**
 	 * @param string $configfile The path of the json file in order to setup the depedency Injection
+	 * @param string $rootDir The Directory ro load the sources
 	 */
-	public function __construct($configfile)
+	public function __construct($configfile,$rootDir="")
 	{
 		if(!file_exists($configfile))
 		{
@@ -27,7 +33,7 @@ class DIResolver
 
 		$this->diClasses=json_decode(file_get_contents($configfile),true);
 
-//		var_dump($this->diClasses);
+		$this->rootDir=$rootDir
 	}
 
 	/**
@@ -49,7 +55,19 @@ class DIResolver
 		{
 			if(!file_exists($itemToInject['file']))
 			{
-				throw new ConfigFileNotFoundException('The config file '.$configfile.'does not exist');
+				if(!$this->rootDir)
+				{
+					throw new ConfigFileNotFoundException('The file '.$itemToInject['file'].' does not exist');
+				}
+				else
+				{
+					$itemToInject['file']=$this->rootDir."/".$itemToInject['depedencies'];
+
+					if(!file_exists($itemToInject['file']))
+					{
+						throw new ConfigFileNotFoundException('The file '.$itemToInject['file'].' does not exist');
+					}
+				}
 			}
 			require_once($itemToInject['file']);
 		}
@@ -75,7 +93,7 @@ class DIResolver
 		{
 			if(!is_array($itemToInject['depedencies']))
 			{
-				throw new InvalidSettingsException("The 'depedencies' of service $name must be a valid json array");
+					throw new InvalidSettingsException("The 'depedencies' of service $name must be a valid json array");
 			}
 
 			foreach($itemToInject['depedencies'] as $depedency)
