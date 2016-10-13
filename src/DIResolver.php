@@ -25,7 +25,9 @@ class DIResolver
 			throw new ConfigFileNotFoundException('The config file '.$configfile.'does not exist');
 		}
 		
-		$this->diClasses=json_decode($configfile,true);
+		$this->diClasses=json_decode(file_get_contents($configfile),true);
+		
+//		var_dump($this->diClasses);
 	}
 	
 	/**
@@ -72,7 +74,7 @@ class DIResolver
 				$depedencies[]=$this->get($depedency);
 			}	
 		}
-		
+				
 		$classtoReturn= new \ReflectionClass($itemToInject['class']);
 		return $classtoReturn->newInstanceArgs($depedencies);
 	}
