@@ -7,9 +7,9 @@ function require_all_files($root)
     {
         $ext = pathinfo($f, PATHINFO_EXTENSION);
         if ($ext == 'php' || $ext == 'inc')
-		{
-			require_once ($file); // or require(), require_once(), include_once()
-		}
+    		{
+    			require_once ($file); // or require(), require_once(), include_once()
+    		}
     }
 }
 
