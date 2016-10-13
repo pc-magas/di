@@ -13,4 +13,4 @@ function require_all_files($root)
     }
 }
 
-require_all_files(__DIR__.'src');
+require_all_files(__DIR__.'/src');
