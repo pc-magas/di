@@ -14,9 +14,9 @@ class DIResolver
 	 * @var array
 	 */
 	private $diClasses=array();
-	
+
 	/**
-	 * @param string $configfile The path of the json file in order to setup the depedency Injection 
+	 * @param string $configfile The path of the json file in order to setup the depedency Injection
 	 */
 	public function __construct($configfile)
 	{
@@ -24,12 +24,12 @@ class DIResolver
 		{
 			throw new ConfigFileNotFoundException('The config file '.$configfile.'does not exist');
 		}
-		
+
 		$this->diClasses=json_decode(file_get_contents($configfile),true);
-		
+
 //		var_dump($this->diClasses);
 	}
-	
+
 	/**
 	 * @param string $name The name of the service
 	 * @return Object
@@ -37,18 +37,27 @@ class DIResolver
 	public function get($name)
 	{
 		$classtoReturn=null;
-		
+
 		if(!isset($this->diClasses[$name]))
 		{
-			throw new ServiceDoesNotExistException($name);	
+			throw new ServiceDoesNotExistException($name);
 		}
-		
+
 		$itemToInject= $this->diClasses[$name];
-		
+
+		if(isset($itemToInject['file']))
+		{
+			if(!file_exists($itemToInject['file']))
+			{
+				throw new ConfigFileNotFoundException('The config file '.$configfile.'does not exist');
+			}
+			require_once($itemToInject['file']);
+		}
+
 		//Validating the classes
 		if(!isset($itemToInject['class']))
 		{
-			throw new InvalidSettingsException("For service $name is not defined a valid value for 'class' ");						
+			throw new InvalidSettingsException("For service $name is not defined a valid value for 'class' ");
 		}
 		else if(!is_string($itemToInject['class']))
 		{
@@ -58,25 +67,25 @@ class DIResolver
 		{
 			throw new ClassNotFoundException($itemToInject['class']);
 		}
-			
+
 		//Loading Depedencies
 		$depedencies=array();
-	
+
 		if(isset($itemToInject['depedencies']))
 		{
 			if(!is_array($itemToInject['depedencies']))
 			{
-				throw new InvalidSettingsException("The 'depedencies' of service $name must be a valid json array");				
+				throw new InvalidSettingsException("The 'depedencies' of service $name must be a valid json array");
 			}
-			
+
 			foreach($itemToInject['depedencies'] as $depedency)
 			{
 				$depedencies[]=$this->get($depedency);
-			}	
+			}
 		}
-				
+
 		$classtoReturn= new \ReflectionClass($itemToInject['class']);
 		return $classtoReturn->newInstanceArgs($depedencies);
 	}
-	
+
 }
