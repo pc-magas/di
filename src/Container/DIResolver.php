@@ -61,7 +61,7 @@ class DIResolver
 				}
 				else
 				{
-					$itemToInject['file']=$this->rootDir."/".$itemToInject['depedencies'];
+					$itemToInject['file']=$this->rootDir."/".$itemToInject['file'];
 
 					if(!file_exists($itemToInject['file']))
 					{
