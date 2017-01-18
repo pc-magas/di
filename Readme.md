@@ -1,7 +1,8 @@
-=== Sample Depedency Injection System
+## Sample Depedency Injection System
 
 In order to work please create the following json:
 
+```
 {
 	service1:
 	{
@@ -17,6 +18,7 @@ In order to work please create the following json:
 		depedencies:[^name for the first service^,^name for the second service^,...,^name for the nth service^]
 	}
 }
+```
 
 Into a file.
 
