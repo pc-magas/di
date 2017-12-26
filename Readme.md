@@ -2,7 +2,7 @@
 
 In order to work please create the following json:
 
-```json
+```
 {
 	"service1":{
 		class: ^namespace for the class^
