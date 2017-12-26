@@ -2,7 +2,7 @@
 
 In order to work please create the following json:
 
-```
+```json
 {
 	service1:
 	{
@@ -24,7 +24,7 @@ Into a file.
 
 Then to use it please use:
 
+```php
 use DI\Container;
-
-
-Resolver r= new DIResolver('^path od the json file^');
+Resolver r= new DIResolver('^path of the json file^');
+```
