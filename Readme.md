@@ -4,15 +4,14 @@ In order to work please create the following json:
 
 ```json
 {
-	service1:
-	{
+	"service1":{
 		class: ^namespace for the class^
 		depedencies:[^name for the first service^,^name for the second service^,...,^name for the nth service^]
 	},
 	.
 	.
 	.		
-	service_n:
+	"service_n":
 	{
 		class: ^namespace for the class^
 		depedencies:[^name for the first service^,^name for the second service^,...,^name for the nth service^]
